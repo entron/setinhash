@@ -1,0 +1,13 @@
+{{ define "title" }}404 page not found - {{ .Site.Title }}{{ end }}
+
+{{ define "main" }}
+    <h1> Congratulations!! </h1>
+    <p> You just found a page that is not hosted on this web gateway.
+        The most probable reason is that the page is from a non-public accout.
+        We only host public feeds with “publicWebHosting” value set as True by the author.
+        However you can always find all contents no matter whether it is public or not on 
+        the SSB network using an SSB client.
+        Please go to FAQ for more information.
+    <p>
+    <a href="{{ "/about/" | relLangURL }}">Go to FAQ</a>
+{{ end }}

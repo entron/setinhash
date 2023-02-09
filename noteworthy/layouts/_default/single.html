@@ -1,0 +1,53 @@
+{{ define "main" }}
+{{ $author := index .Site.Data.feeds .Params.feeds }}
+<div>
+    <a class="ssbname" href="/feeds/{{ $author.hex }}">
+        {{ $author.name }}
+    </a>
+    {{ if .Date }}
+    <time>{{ .Date.Format "2006-01-02" }}</time>
+    {{ end }}
+    <!-- Display tags -->
+    {{if .Params.channels}}
+    {{ range .Params.channels }}
+    <a class="tag" href="/channels/{{ . | urlize }}">#{{.}}</a>
+    {{ end }}
+    {{ end }}
+</div>
+<div>
+    <p>
+        {{ .Content }}
+    </p>
+</div>
+
+{{ if .Site.Params.enableKofi }}
+
+<script type='text/javascript' src='https://ko-fi.com/widgets/widget_2.js'></script>
+<script type='text/javascript'>
+    const kofiId = '{{ .Site.Params.Kofi }}';
+    kofiwidget2.init('Support Me on Ko-fi', '#29abe0', kofiId);
+    kofiwidget2.draw();
+</script>
+
+{{ end }}
+
+<div class="page-footer">
+    <hr class="footer-divider">
+    <code>{{.Params.id}}</code>
+
+    {{ if eq .Params.type  "reply" }}
+        <a class="replycount" href="/threads/{{ .Params.threads  }}">&#128172;</a>
+    {{ else }}
+        {{ $replyCount := len (index site.Data.threads.threads .Params.threads )}}
+        {{ $replyCount := sub $replyCount 1 }}
+        {{ if gt $replyCount 0 }}
+            <!-- Do not show count to reduce the number of times the page needs to be updated. -->
+            <a class="replycount" href="/threads/{{ .Params.threads  }}">&#128172;</a>
+        {{ end }}
+    {{ end }}
+</div>
+
+{{ if .Params.math }}
+    {{ partial "math.html" . }}
+{{ end }}
+{{end}}

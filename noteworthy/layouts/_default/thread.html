@@ -1,0 +1,36 @@
+{{ define "main" }}
+
+{{ $math := false }}
+
+{{range (index site.Data.threads.threads .Data.Term )}}
+    {{ with site.GetPage . }}
+    {{ if .Params.math }}
+        {{ $math = true }}
+    {{ end }}
+    <article>
+        <div>
+            {{ $author := index .Site.Data.feeds .Params.feeds }}
+            <a class="ssbname" href="/feeds/{{ $author.hex }}">
+                {{ $author.name }}
+            </a>
+            <time>{{ .Date.Format "2006-01-02" }}</time>
+            {{if and (.Params.channels) (eq .Params.type "root")}}
+            {{ range .Params.channels }}
+            <a class="tag" href="/channels/{{ . | urlize }}">#{{.}}</a>
+            {{ end }}
+            {{ end }}
+            <p>
+                {{ .Content }}
+            </p>
+        </div>
+        <div class="post-footer">
+            <a class="ssbid" href="{{ .RelPermalink }}">{{.Params.id}}</a>
+        </div>
+    </article>
+    {{ end }}
+{{ end }}
+
+{{ if $math }}
+    {{ partial "math.html" . }}
+{{ end }}
+{{ end }}

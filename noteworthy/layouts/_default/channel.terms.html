@@ -1,0 +1,13 @@
+{{ define "main" }}
+<!-- Shows all of the site's tags -->
+<h1>#</h1>
+<ul style="list-style:none">
+    {{ range .Data.Terms.ByCount }}
+    {{ if ge .Count 10 }}
+    <li><a style="text-decoration:none" href="{{ .Page.Permalink }}">{{ .Page.Title }}</a> ({{ .Count }})</li>
+    {{ end }}
+    {{ end }}
+</ul>
+
+<div class="page-footer"></div>
+{{end}}

@@ -1,0 +1,16 @@
+{{ define "main" }}
+<!-- Shows all of the site's tags -->
+<h1>@</h1>
+<ul style="list-style:none">
+    {{ range first 1000 .Data.Terms.ByCount }}
+    {{ $author := index site.Data.feeds .Page.Title }}
+    {{ $link := .Page.Permalink }}
+    {{ $count := .Count }}
+    {{ with $author.name }}
+    <li><a style="text-decoration:none" href="{{ $link }}">{{ $author.name }}</a> ({{ $count }})</li>
+    {{ end }}
+    {{ end }}
+</ul>
+
+<div class="page-footer"></div>
+{{end}}
